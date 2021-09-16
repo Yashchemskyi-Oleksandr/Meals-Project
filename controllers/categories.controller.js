@@ -7,11 +7,11 @@ const { Categories } = require("../server/models");
 //   getAll,
 // } = require("../services/categories.service");
 
-// exports.create = async (req, res) => {
+// create // exports.create = async (req, res) => {
 //   res.json(await create(req.body));
 // };
 
-exports.create = async (req, res) => {
+const createCategories = async (req, res) => {
   try {
     await Categories.create({
       name: req.body.name,
@@ -25,7 +25,7 @@ exports.create = async (req, res) => {
 
 // first // exports.getAll = async (req, res) => res.send(await getAll());
 
-exports.getAll = async (req, res) => {
+const getAllCategories = async (req, res) => {
   try {
     const findAll = await Categories.findAll(req.params.id);
     res.status(201).send({ findAll });
@@ -38,7 +38,7 @@ exports.getAll = async (req, res) => {
 // second /// exports.removeById = async (req, res) =>
 //   res.json(await removeById(req.params.id));
 
-exports.removeById = async (req, res) => {
+const removeCategoriesById = async (req, res) => {
   try {
     await Categories.destroy({
       where: {
@@ -54,3 +54,5 @@ exports.removeById = async (req, res) => {
 };
 
 // third //// exports.removeAll = async (req, res) => res.json(await removeAll());
+
+module.exports = { createCategories, getAllCategories, removeCategoriesById };

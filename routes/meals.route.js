@@ -1,25 +1,33 @@
 const { Router } = require("express");
-const mealsController = require("../controllers/meals.controller");
+// const mealsController = require("../controllers/meals.controller");
+const {
+  createMeal,
+  getAllMeals,
+  getByIdMeal,
+  removeByIdMeal,
+  updateByIdMeal,
+} = require("../controllers/meals.controller");
+
 const { route } = require("./categories.route");
 
 const router = Router();
 
-router.post("/", mealsController.create);
+router.post("/", createMeal);
 
 //// получение всех блюд
-router.get("/", mealsController.getAll);
+router.get("/", getAllMeals);
 
 /// получение по id /// google
-router.get("/:id", mealsController.getById);
+router.get("/:id", getByIdMeal);
 
 /// удаление всех блюд
 // router.delete("/", mealsController.removeAll);
 
 /// удаление блюд по id
-router.delete("/:id", mealsController.removeById);
+router.delete("/:id", removeByIdMeal);
 
 /// обновление блюд по id
-router.put("/:id", mealsController.updateById); /// change to patch
+router.put("/:id", updateByIdMeal); /// change to patch
 
 module.exports = router;
 

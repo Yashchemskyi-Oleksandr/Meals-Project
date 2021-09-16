@@ -11,7 +11,7 @@ const { Meals } = require("../server/models");
 
 // one /// exports.create = async (req, res) => res.json(await create(req.body));
 
-exports.create = async (req, res) => {
+const createMeal = async (req, res) => {
   try {
     const meal = await Meals.create({
       name: req.body.name,
@@ -30,7 +30,7 @@ exports.create = async (req, res) => {
 
 // two // exports.getAll = async (req, res) => res.send(await getAll());
 
-exports.getAll = async (req, res) => {
+const getAllMeals = async (req, res) => {
   try {
     const meals = await Meals.findAll();
     res.status(201).json({ meals });
@@ -42,7 +42,7 @@ exports.getAll = async (req, res) => {
 
 // three // exports.getById = async (req, res) => res.send(await getById(req.params.id));
 
-exports.getById = async (req, res) => {
+const getByIdMeal = async (req, res) => {
   try {
     const mealID = await Meals.findByPk(req.params.id);
     res.status(200).json({ mealID });
@@ -55,7 +55,7 @@ exports.getById = async (req, res) => {
 // four // exports.removeById = async (req, res) =>
 //   res.json(await removeById(req.params.id));
 
-exports.removeById = async (req, res) => {
+const removeByIdMeal = async (req, res) => {
   try {
     await Meals.destroy({
       where: {
@@ -73,7 +73,7 @@ exports.removeById = async (req, res) => {
 
 // five //exports.updateById = async (req, res) => res.json(await updateById(req));
 
-exports.updateById = async (req, res) => {
+const updateByIdMeal = async (req, res) => {
   try {
     const id = req.params.id;
     const data = req.body;
@@ -88,6 +88,14 @@ exports.updateById = async (req, res) => {
     res.status(500).json({ message: err.message });
     console.log(err);
   }
+};
+
+module.exports = {
+  createMeal,
+  getAllMeals,
+  getByIdMeal,
+  removeByIdMeal,
+  updateByIdMeal,
 };
 
 ////// test catch
