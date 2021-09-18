@@ -1,0 +1,86 @@
+.footer {
+  display: flex;
+  align-items: center;
+  /* position: absolute; */
+  justify-content: space-between;
+  background-color: #c7ebff;
+  width: 100%;
+  bottom: 0;
+
+  color: aqua;
+  height: 140px;
+  border: 1px solid;
+  border-color: #6caefc;
+}
+
+.restaurant_name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid;
+  border-left: 1px solid;
+  /* width: 140px; */
+  border-color: #6caefc;
+  height: 100%;
+  background: white;
+  color: black;
+  font-family: monospace;
+}
+
+div {
+  margin: 0 2rem;
+}
+
+h4 {
+  height: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
+}
+
+a {
+  text-decoration: none;
+  pointer-events: none;
+  color: black;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+div h4:nth-child(2) {
+  margin-bottom: 1rem;
+}
+
+span:first-child {
+  font-size: 24px;
+  padding: 1rem 1rem 0 1rem;
+}
+
+span:last-child {
+  font-size: 16px;
+  padding: 0 1rem 1rem 1rem;
+}
+
+div:first-child {
+  color: black;
+  margin-left: 2rem;
+  width: 250px;
+  text-align: center;
+}
+
+div:last-child {
+  margin-right: 2rem;
+}
+
+p {
+  height: 3rem;
+  width: 250px;
+  background-color: #0b7bff;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

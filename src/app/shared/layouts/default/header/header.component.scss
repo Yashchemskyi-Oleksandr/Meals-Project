@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* position: fixed; */
+  justify-content: space-between;
+  background-color: darkslateblue;
+  top: 0;
+  color: aqua;
+  height: 100px;
+  border: 1px solid;
+  border-color: #6caefc;
+  z-index: 1;
+
+  &-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    width: 140px;
+    border-color: #6caefc;
+    height: 100%;
+    background: white;
+    color: black;
+    font-family: monospace;
+  }
+
+  &-wifi {
+    display: flex;
+    flex-direction: column;
+    margin: 0 2rem;
+  }
+
+  &-wifi span {
+    padding: 1rem 1rem 0 1rem;
+  }
+}
