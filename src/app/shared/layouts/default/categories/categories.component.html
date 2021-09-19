@@ -1,7 +1,21 @@
-<div class="categories">
+<!-- <div class="categories">
   <ul class="categories-row" *ngFor="let item of data.categories">
     <li>
       <a href="#">{{item.name}}</a>
     </li>
   </ul>
+</div> -->
+
+<!-- <div class="categories">
+  <ul class="categories-row" *ngIf="response">
+    <li>
+      <a href="#">{{ response.categoryName }}</a>
+    </li>
+  </ul>
+</div> -->
+
+<div class="categories">
+  <a href="#" *ngFor="let name of data">
+    {{ name.categoryName }}
+  </a>
 </div>
