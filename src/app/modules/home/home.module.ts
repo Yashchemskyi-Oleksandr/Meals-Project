@@ -4,16 +4,9 @@ import { DefaultModule } from '../../shared/layouts/default/default.module';
 import { HomeComponent } from './home.component';
 import { MealsComponent } from './meals/meals.component';
 
-
 @NgModule({
-  declarations: [
-    HomeComponent,
-    MealsComponent
-  ],
-  imports: [
-  CommonModule,
-  DefaultModule
-  ],
-  exports: [HomeComponent, MealsComponent]
+  declarations: [HomeComponent, MealsComponent],
+  imports: [CommonModule, DefaultModule],
+  exports: [HomeComponent, MealsComponent],
 })
-export class HomeModule { }
+export class HomeModule {}

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 //   categoryName:string
 // }
 import { HttpClient } from '@angular/common/http';
-import { ApiService } from 'src/app/api.service';
+import { CategoryService } from 'src/app/services/category.service';
 
 // import { mock } from 'src/app/modules/home/meals/meals.mock';
 
@@ -13,15 +13,13 @@ import { ApiService } from 'src/app/api.service';
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
-  // data = mock;
-  public data: any = [];
-  constructor(private Categories: ApiService) {}
+  public categories: any = [];
+  constructor(private Categories: CategoryService) {}
 
   ngOnInit(): void {
     this.Categories.getCategories().subscribe((response) => {
-      this.data = response;
+      this.categories = response;
       console.log(response);
     });
-    // console.log(this.data);
   }
 }
