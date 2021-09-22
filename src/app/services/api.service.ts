@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  // constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
+
+  getAllInfo() {
+    let url = 'http://localhost:7000/api/info';
+    return this.http.get(url);
+  }
   ///// переніс в сервіс категорій
   // getCategories() {
   //   let url = 'http://localhost:7000/api/categories';

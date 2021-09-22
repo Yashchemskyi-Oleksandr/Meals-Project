@@ -7,7 +7,8 @@
   margin: 0;
   border: 0;
   box-sizing: border-box;
-  /* font-family: 'Lato', sans-serif; */
+  /* font-family: "Lato", sans-serif; */
+  font-family: "Roboto", sans-serif;
 }
 
 ul,
@@ -48,4 +49,5 @@ body {
 
 main {
   padding: 30px;
+  flex: 1 1 auto;
 }

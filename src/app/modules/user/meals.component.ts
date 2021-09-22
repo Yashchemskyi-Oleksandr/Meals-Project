@@ -1,7 +1,6 @@
 import { CategoryService } from 'src/app/services/category.service';
-import { MealsService } from './../../../services/meals.service';
+import { MealsService } from 'src/app/services/meals.service';
 import { Component, OnInit } from '@angular/core';
-// import { mock } from './meals.mock';
 // import { ApiService } from 'src/app/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Dishes } from 'src/app/interface/dishes';
@@ -29,7 +28,7 @@ export class MealsComponent implements OnInit {
     console.log(categoryId);
 
     this.filteredMeals = this.meals.filter((meal: any) => {
-      console.log(meal);
+      // console.log(meal);
 
       return meal.categoryId === categoryId;
     });
@@ -45,7 +44,7 @@ export class MealsComponent implements OnInit {
 
     this.categoryService.getCategories().subscribe((cat) => {
       this.categories = cat;
-      console.log(cat);
+      // console.log(cat);
     });
 
     this.mealsService

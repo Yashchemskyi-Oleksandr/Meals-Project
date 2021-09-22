@@ -1,0 +1,49 @@
+<div>
+  <div class="categories">
+    <a *ngFor="let c of categories" (click)="onClickCategory(c.id)">
+      {{ c.categoryName }}
+    </a>
+  </div>
+  <div>
+    <div class="card_wrap">
+      <div class class="card" *ngFor="let m of filteredMeals">
+        <img class="card-image" src="{{ m.img }}" />
+        <div class="card-content">
+          <p class="card-title">{{ m.name }}</p>
+          <p class="card-description">{{ m.description }}</p>
+          <div class="card-info">
+            <span>{{ m.weight }}g</span>
+            <span>{{ m.price }}UAH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div>
+  <div class="categories">
+    <ul class="categories-row">
+      <li *ngFor="let c of categories">
+        <a href="#" [routerLink]="['/meals', c.id]">
+          {{ c.categoryName }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <div class="card_wrap">
+      <div class class="card" *ngFor="let m of filteredMeals | async">
+        <img class="card-image" src="{{ m.img }}" />
+        <div class="card-content">
+          <p class="card-title">{{ m.name }}</p>
+          <p class="card-description">{{ m.description }}</p>
+          <div class="card-info">
+            <span>{{ m.weight }}g</span>
+            <span>{{ m.price }}UAH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

@@ -5,4 +5,5 @@ export interface Dishes {
   weight: string;
   price: string;
   categoryId: string;
+  availability: boolean;
 }

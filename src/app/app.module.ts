@@ -1,36 +1,43 @@
-import { MealsComponent } from 'src/app/modules/home/meals/meals.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { AppRoutingModule } from './app-routing.module';
+import { MealsComponent } from './modules/user/meals.component';
 import { MealsService } from './services/meals.service';
 import { CategoryService } from './services/category.service';
-import { HomeComponent } from './modules/home/home.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
-// import { ApiService } from './api.service';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeModule } from './modules/home/home.module';
-import { CategoriesComponent } from './shared/layouts/default/categories/categories.component';
+
 import { ActivatedRoute } from '@angular/router';
+import { ApiService } from './services/api.service';
+import { AdminComponent } from './modules/admin/admin.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    MealsComponent,
+    HeaderComponent,
+    FooterComponent,
+    AdminComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HomeModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      // { path: '', component: MealsComponent },
-      { path: 'meals/:categoryId', component: MealsComponent },
-      { path: '', component: CategoriesComponent },
-    ]),
+    // RouterModule.forRoot([
+    //   { path: '', component: HomeComponent },
+    //   // { path: '', component: MealsComponent },
+    //   { path: 'meals/:categoryId', component: MealsComponent },
+    //   // { path: '', component: CategoriesComponent },
+    //   { path: 'admin', component: AdminComponent },
+    // ]),
   ],
-  providers: [CategoryService, MealsService],
+  providers: [CategoryService, MealsService, ApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
