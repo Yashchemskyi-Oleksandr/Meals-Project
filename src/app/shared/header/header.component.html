@@ -1,10 +1,10 @@
-<header class="header">
+<header class="header" *ngFor="let i of info">
   <div class="header-name">
     <span>ADLER</span>
     <span>restaurant</span>
   </div>
 
   <div class="header-wifi">
-    <span>Password: adler-2021</span>
+    <span>Password: {{ i.wiFi }}</span>
   </div>
 </header>

@@ -44,15 +44,15 @@ export class MealsComponent implements OnInit {
 
     this.categoryService.getCategories().subscribe((cat) => {
       this.categories = cat;
-      // console.log(cat);
+      console.log(cat);
     });
 
-    this.mealsService
-      .getMealsByCategories(this.id)
-      .subscribe((mealsCat: any) => {
-        console.log(mealsCat);
-        this.filteredMeals = mealsCat;
-        console.log(this.filteredMeals);
-      });
+    // this.mealsService
+    //   .getMealsByCategories(this.id)
+    //   .subscribe((mealsCat: any) => {
+    //     console.log(mealsCat);
+    //     this.filteredMeals = mealsCat;
+    //     console.log(this.filteredMeals);
+    //   });
   }
 }

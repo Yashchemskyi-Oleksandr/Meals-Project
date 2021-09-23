@@ -9,12 +9,12 @@ import { InfoService } from 'src/app/services/info.service';
 export class HeaderComponent implements OnInit {
   info: any = [];
 
-  constructor(info: InfoService) {}
+  constructor(public infoService: InfoService) {}
 
   ngOnInit(): void {
-    this.info.getAllInfo().subscribe((information: string) => {
-      this.info = information;
-      console.log(information);
+    this.infoService.getAllInfo().subscribe((i: any) => {
+      this.info = i;
+      // console.log(i);
     });
   }
 }

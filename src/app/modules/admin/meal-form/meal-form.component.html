@@ -1,13 +1,12 @@
 <form class="form" #f="ngForm" (ngSubmit)="saveNewMeal(f.value)">
   <div class="form-wrapper">
-    <!-- <div class="form-top"> -->
-
-    <!-- <img
+    <div class="form-top">
+      <img
         src="https://evanevanstours.com/blog/wp-content/uploads/2019/09/meat-restaurant-london.jpg"
         alt="Photo"
-      /> -->
-    <!-- <button>Add Photo</button> -->
-    <!-- </div> -->
+      />
+      <button>Add Photo</button>
+    </div>
     <input [(ngModel)]="meal.img" name="img" type="text" placeholder="Image" />
     <input [(ngModel)]="meal.name" name="name" type="text" placeholder="Name" />
     <select [(ngModel)]="meal.categoryId" name="categoryId" class="selector">

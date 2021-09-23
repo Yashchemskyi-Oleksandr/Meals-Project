@@ -1,7 +1,7 @@
+import { Meals } from './../interface/dishes';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Meals } from '../interface/dishes';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +18,11 @@ export class MealsService {
 
   constructor(private http: HttpClient) {}
 
+  createMeal(meal: Meals): Observable<Meals> {
+    let url = 'http://localhost:7000/api/meals';
+    return this.http.post<Meals>(url, meal);
+  }
+
   getMeals(): Observable<Meals[]> {
     let url = 'http://localhost:7000/api/meals';
     return this.http.get<Meals[]>(url);
@@ -31,5 +36,10 @@ export class MealsService {
   getByIdMeal(productId: string): Observable<Meals[]> {
     let url = `http://localhost:7000/api/meals/edit-meal/${productId}`;
     return this.http.get<Meals[]>(url);
+  }
+
+  updateByIdMeal(productId: string, product: Meals): Observable<Meals[]> {
+    let url = `http://localhost:7000/api/meals/${productId}`;
+    return this.http.put<Meals[]>(url, { ...product });
   }
 }

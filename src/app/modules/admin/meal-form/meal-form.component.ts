@@ -12,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MealFormComponent implements OnInit {
   public categories: any = [];
-  public meal: any = {};
+  public meal: any = [];
+  id: any;
 
   constructor(
     private categoryService: CategoryService,
@@ -23,12 +24,15 @@ export class MealFormComponent implements OnInit {
   ) {}
 
   saveNewMeal(product: any) {
-    this.http
-      .post('http://localhost:7000/api/meals', product)
-      .subscribe((result) => {
+    if (this.id) {
+      this.mealsService.updateByIdMeal(this.id, product).subscribe((result) => {
+        console.log('resultSubscribe', result);
+      });
+    } else {
+      this.mealsService.createMeal(product).subscribe((result) => {
         console.log('result', result);
       });
-    console.log(product);
+    }
     this.router.navigate(['/admin']);
   }
 
@@ -38,14 +42,14 @@ export class MealFormComponent implements OnInit {
       console.log(cat);
     });
 
-    let id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log(this.id);
 
-    if (id) {
-      this.mealsService.getByIdMeal(id).subscribe((m) => {
+    if (this.id) {
+      this.mealsService.getByIdMeal(this.id).subscribe((m) => {
         console.log(m);
 
-        this.meal = m;
+        return (this.meal = m);
       });
     }
     console.log(this.meal);
