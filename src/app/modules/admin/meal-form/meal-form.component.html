@@ -1,25 +1,42 @@
-<!-- <form class="form" action="#">
+<form class="form" #f="ngForm" (ngSubmit)="saveNewMeal(f.value)">
   <div class="form-wrapper">
-    <div class="form-top">
-      <img
+    <!-- <div class="form-top"> -->
+
+    <!-- <img
         src="https://evanevanstours.com/blog/wp-content/uploads/2019/09/meat-restaurant-london.jpg"
         alt="Photo"
-      />
-      <button>Add Photo</button>
-    </div>
-    <input type="text" placeholder="Name" />
-    <select name="select" class="selector">
-      <option value="value1" selected disabled>Choose the category</option>
-      <option value="value2" *ngFor="let c of categories">
+      /> -->
+    <!-- <button>Add Photo</button> -->
+    <!-- </div> -->
+    <input [(ngModel)]="meal.img" name="img" type="text" placeholder="Image" />
+    <input [(ngModel)]="meal.name" name="name" type="text" placeholder="Name" />
+    <select [(ngModel)]="meal.categoryId" name="categoryId" class="selector">
+      <option selected disabled>Choose the category</option>
+      <option *ngFor="let c of categories" [value]="c.id">
         {{ c.categoryName }}
       </option>
     </select>
-    <input type="text" placeholder="Price" />
-    <input type="text" placeholder="Weight" />
-    <input type="text" placeholder="Please write a description about meal" />
+    <input
+      [(ngModel)]="meal.price"
+      name="price"
+      type="text"
+      placeholder="Price"
+    />
+    <input
+      [(ngModel)]="meal.weight"
+      name="weight"
+      type="text"
+      placeholder="Weight"
+    />
+    <input
+      [(ngModel)]="meal.description"
+      name="description"
+      type="text"
+      placeholder="Please write a description about meal"
+    />
     <div class="two-btn">
-      <button class="save-meal">Save Meal</button>
-      <button class="cancel">Cancel</button>
+      <button class="btn-save">Save Meal</button>
+      <button routerLink="/admin" class="cancel">Cancel</button>
     </div>
   </div>
-</form> -->
+</form>

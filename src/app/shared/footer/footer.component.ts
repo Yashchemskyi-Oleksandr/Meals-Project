@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
+import { InfoService } from 'src/app/services/info.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,10 +9,10 @@ import { ApiService } from 'src/app/services/api.service';
 export class FooterComponent implements OnInit {
   info: any = [];
 
-  constructor(public apiService: ApiService) {}
+  constructor(public infoService: InfoService) {}
 
   ngOnInit(): void {
-    this.apiService.getAllInfo().subscribe((i: any) => {
+    this.infoService.getAllInfo().subscribe((i: any) => {
       this.info = i;
       // console.log(i);
     });

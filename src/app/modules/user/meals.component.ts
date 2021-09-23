@@ -3,7 +3,7 @@ import { MealsService } from 'src/app/services/meals.service';
 import { Component, OnInit } from '@angular/core';
 // import { ApiService } from 'src/app/api.service';
 import { ActivatedRoute } from '@angular/router';
-import { Dishes } from 'src/app/interface/dishes';
+import { Meals } from 'src/app/interface/dishes';
 import { RouterModule, Route } from '@angular/router';
 
 @Component({

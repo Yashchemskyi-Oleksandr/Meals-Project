@@ -1,42 +1,33 @@
 <div class="admin">
   <div class="admin-top">
-    <input type="text" placeholder="Type some text" />
-    <form>
-      <input type="text" placeholder="Add new category" />
-      <button>Save</button>
+    <input
+      #query
+      (keyup)="filter(query.value)"
+      type="text"
+      placeholder="Search"
+    />
+    <form #createCategory="ngForm" (ngSubmit)="onSubmit(createCategory.value)">
+      <input
+        name="categoryName"
+        ngModel
+        #categoryName="ngModel"
+        placeholder="Add new category"
+      />
+      <button type="submit" class="btn-save">Save</button>
     </form>
-    <button>add new meal</button>
+    <button [routerLink]="['/admin/new-meal']" type="button" class="btn-save">
+      add new meal
+    </button>
   </div>
 
-  <div class="admin-main">
+  <div class="admin-main" *ngFor="let m of filteredMeals">
     <ul class="admin-main__list">
-      <li>Name</li>
-      <li>categoryName</li>
-      <li>price</li>
-      <li>weight</li>
+      <li>{{ m.name }}</li>
+      <li>{{ m.categoryName }}</li>
+      <li>{{ m.price }}</li>
+      <li>{{ m.weight }}</li>
       <li>availability: <input type="checkbox" /></li>
-      <button>Edit</button>
+      <button [routerLink]="['edit-meal/', m.id]">Edit</button>
     </ul>
   </div>
 </div>
-
-<!-- <form class="form" action="#">
-    <div class="form-wrapper">
-      <div class="form-top">
-        <img
-          src="https://evanevanstours.com/blog/wp-content/uploads/2019/09/meat-restaurant-london.jpg"
-          alt="Photo"
-        />
-        <button>Add Photo</button>
-      </div>
-      <input type="text" placeholder="Name" />
-      <input type="text" placeholder="Category" />
-      <input type="text" placeholder="Available" />
-      <input type="text" placeholder="Price" />
-      <input type="text" placeholder="Please write a description anot meal" />
-      <div class="two-btn">
-        <button class="save-meal">Save Meal</button>
-        <button class="cancel">Cancel</button>
-      </div>
-    </div>
-  </form> -->

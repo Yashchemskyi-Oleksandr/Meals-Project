@@ -1,3 +1,4 @@
+import { MealFormComponent } from './modules/admin/meal-form/meal-form.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from './services/api.service';
+import { InfoService } from './services/info.service';
 import { AdminComponent } from './modules/admin/admin.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AdminComponent } from './modules/admin/admin.component';
     HeaderComponent,
     FooterComponent,
     AdminComponent,
+    MealFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,7 @@ import { AdminComponent } from './modules/admin/admin.component';
     //   { path: 'admin', component: AdminComponent },
     // ]),
   ],
-  providers: [CategoryService, MealsService, ApiService],
+  providers: [CategoryService, MealsService, InfoService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

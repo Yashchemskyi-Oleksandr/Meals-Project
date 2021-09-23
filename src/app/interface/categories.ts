@@ -1,4 +1,4 @@
 export interface Categories {
-  img: string;
+  id?: string;
   categoryName: string;
 }

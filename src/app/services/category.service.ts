@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Categories } from '../interface/categories';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,8 @@ export class CategoryService {
   private url = 'http://localhost:7000/api/categories';
 
   constructor(private http: HttpClient) {}
-  getCategories() {
-    return this.http.get(this.url);
+
+  getCategories(): Observable<Categories[]> {
+    return this.http.get<Categories[]>(this.url);
   }
 }

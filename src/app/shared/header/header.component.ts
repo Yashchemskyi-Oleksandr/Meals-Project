@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
+import { InfoService } from 'src/app/services/info.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class HeaderComponent implements OnInit {
   info: any = [];
 
-  constructor(info: ApiService) {}
+  constructor(info: InfoService) {}
 
   ngOnInit(): void {
     this.info.getAllInfo().subscribe((information: string) => {

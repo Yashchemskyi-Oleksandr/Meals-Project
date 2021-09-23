@@ -1,4 +1,5 @@
-export interface Dishes {
+export interface Meals {
+  id?: string;
   img: string;
   name: string;
   description: string;
