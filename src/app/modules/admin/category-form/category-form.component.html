@@ -1,0 +1,18 @@
+<form class="form" #f="ngForm" (ngSubmit)="saveCategory(f.value)">
+  <div class="form-wrapper">
+    <input
+      [(ngModel)]="editCategory.categoryName"
+      name="categoryName"
+      type="text"
+      placeholder="category"
+    />
+
+    <div class="two-btn">
+      <button class="btn-save">Save Meal</button>
+      <button routerLink="/admin/categories" class="cancel">Cancel</button>
+      <div>
+        <!-- <button type="button" (click)="delete()" class="cancel">Delete</button> -->
+      </div>
+    </div>
+  </div>
+</form>

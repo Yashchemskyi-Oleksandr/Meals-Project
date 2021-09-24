@@ -36,6 +36,25 @@
     <div class="two-btn">
       <button class="btn-save">Save Meal</button>
       <button routerLink="/admin" class="cancel">Cancel</button>
+      <div>
+        <button type="button" (click)="delete()" class="cancel">Delete</button>
+      </div>
     </div>
   </div>
 </form>
+
+<!-- <form class="form" #f="ngForm" (ngSubmit)="saveNewMeal(f.value)">
+  <div class="form-wrapper">
+    <label *ngFor="let c of categories">
+      <input
+        name="img"
+        type="text"
+        placeholder="Image"
+        [value]="c.categoryName"
+      />
+      <button type="button" (click)="delete()" class="btn-save">Delete</button>
+      <button class="btn-save">save</button>
+    </label>
+    <button class="btn-save">Save</button>
+  </div>
+</form> -->

@@ -1,0 +1,27 @@
+<div class="admin-top">
+  <button [routerLink]="['/admin']" type="submit" class="btn-save">Back</button>
+  <form #createCategory="ngForm" (ngSubmit)="onSubmit(createCategory.value)">
+    <input
+      name="categoryName"
+      ngModel
+      #categoryName="ngModel"
+      placeholder="Add new category"
+    />
+    <button type="submit" class="btn-save">Save</button>
+  </form>
+</div>
+
+<div class="table">
+  <table class="customers">
+    <tr>
+      <th>CategoryName</th>
+      <th>Edit</th>
+    </tr>
+    <tr *ngFor="let c of categories">
+      <td>{{ c.categoryName }}</td>
+      <td>
+        <button [routerLink]="['edit-category/', c.id]">Edit</button>
+      </td>
+    </tr>
+  </table>
+</div>

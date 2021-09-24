@@ -14,6 +14,7 @@ export class MealFormComponent implements OnInit {
   public categories: any = [];
   public meal: any = [];
   id: any;
+  public showBtn: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -36,7 +37,20 @@ export class MealFormComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
+  delete() {
+    if (confirm('Are you sure you want to delete this product')) {
+      this.mealsService.deleteByIdMeal(this.id).subscribe((result) => {
+        console.log('delte', result);
+      });
+    }
+
+    this.router.navigate(['/admin']);
+  }
+
   ngOnInit(): void {
+    //      hideBtnDelete() {
+    //    this.showFormEdit = false;
+    //  }
     this.categoryService.getCategories().subscribe((cat) => {
       this.categories = cat;
       console.log(cat);
