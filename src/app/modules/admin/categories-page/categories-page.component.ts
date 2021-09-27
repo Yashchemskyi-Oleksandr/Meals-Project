@@ -1,7 +1,13 @@
+import { createCategory } from './../../../store/categories/categories.action';
+import { AppState } from 'src/app/store/app.state';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { selectCategories } from 'src/app/store/categories/categories.selector';
+import { Observable } from 'rxjs';
+import { Categories } from 'src/app/store/categories/categories.model';
 
 @Component({
   selector: 'app-categories-page',
@@ -9,26 +15,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./categories-page.component.scss'],
 })
 export class CategoriesPageComponent implements OnInit {
-  public categories: any = [];
-  public newCategory: any = [];
+  categories: Observable<Categories[]>;
 
   constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private categoryService: CategoryService
-  ) {}
+    private categoryService: CategoryService,
+    private store: Store<AppState>
+  ) {
+    this.categories = store.pipe(select(selectCategories));
+  }
 
-  onSubmit(data: any) {
+  create(data: any) {
+    //  have only { catNam: ' someNa,me}
     this.categoryService.createCategory(data).subscribe((category) => {
-      this.newCategory = category;
-      console.log(this.newCategory);
+      this.store.dispatch(createCategory({ newCategory: category }));
     });
   }
 
-  ngOnInit(): void {
-    this.categoryService.getCategories().subscribe((cat) => {
-      this.categories = cat;
-      console.log(cat);
-    });
-  }
+  ngOnInit(): void {}
 }

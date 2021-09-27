@@ -1,13 +1,18 @@
 <footer class="footer">
-  <ul class="footer-block" *ngFor="let i of info">
-    <div class="footer-address">
-      <p>{{ i.address }}</p>
-    </div>
+  <div class="footer-block" *ngIf="info | async as info">
     <div class="footer-name">
-      <span>ADLER</span>
-      <span>restaurant</span>
+      <p>ADLER</p>
     </div>
-
-    <li>Wi-Fi: {{ i.wiFi }}</li>
-  </ul>
+    <div>
+      <p>copyright by Alex</p>
+    </div>
+    <div>
+      <p>{{ info.address }}</p>
+      <p>{{ info.contacts }}</p>
+    </div>
+  </div>
 </footer>
+
+<!-- <div *ngIf="info | async as info" class="header-wifi">
+  Password: {{ info.wiFi }}
+</div> -->

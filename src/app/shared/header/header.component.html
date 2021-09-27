@@ -1,10 +1,6 @@
-<header class="header" *ngFor="let i of info">
-  <div class="header-name">
-    <span>ADLER</span>
-    <span>restaurant</span>
-  </div>
-
-  <div class="header-wifi">
-    <span>Password: {{ i.wiFi }}</span>
+<header class="header">
+  <a class="header-name" href="">adler</a>
+  <div *ngIf="info | async as info" class="header-wifi">
+    {{ info.wiFi }}
   </div>
 </header>

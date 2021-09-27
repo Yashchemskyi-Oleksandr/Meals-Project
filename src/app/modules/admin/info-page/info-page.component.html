@@ -1,0 +1,30 @@
+<div class="admin-top">
+  <button [routerLink]="['/admin']" type="submit" class="btn-save">Back</button>
+</div>
+
+<form class="form" #f="ngForm" (ngSubmit)="saveInfo(f.value)">
+  <div class="form-wrapper">
+    <input
+      [(ngModel)]="info && info.contacts"
+      name="contacts"
+      type="text"
+      placeholder="Contacts"
+    />
+    <input
+      [(ngModel)]="info && info.address"
+      name="address"
+      type="text"
+      placeholder="Address"
+    />
+    <input
+      [(ngModel)]="info && info.wiFi"
+      name="wiFi"
+      type="text"
+      placeholder="wiFi"
+    />
+    <div class="two-btn">
+      <button class="btn-save">Save Meal</button>
+      <button routerLink="/admin" class="cancel">Cancel</button>
+    </div>
+  </div>
+</form>

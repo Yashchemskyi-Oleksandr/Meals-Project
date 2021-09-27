@@ -1,36 +1,85 @@
 <div class="admin">
-  <div class="admin-top">
-    <input
-      #query
-      (keyup)="filter(query.value)"
-      type="text"
-      placeholder="Search"
-    />
-    <form #createCategory="ngForm" (ngSubmit)="onSubmit(createCategory.value)">
+  <div class="admin-bar">
+    <div class="admin-top">
       <input
-        name="categoryName"
-        ngModel
-        #categoryName="ngModel"
-        placeholder="Add new category"
+        #query
+        (keyup)="search(query.value)"
+        type="text"
+        placeholder="Search"
       />
-      <button type="submit" class="btn-save">Save</button>
-    </form>
-    <button [routerLink]="['/admin/categories']" type="button" class="btn-save">
-      Categories
-    </button>
-    <button [routerLink]="['/admin/new-meal']" type="button" class="btn-save">
-      Add new meal
-    </button>
+
+      <!-- <form #createCategory="ngForm" (ngSubmit)="onSubmit(createCategory.value)">
+        <input
+          name="categoryName"
+          ngModel
+          #categoryName="ngModel"
+          placeholder="Add new category"
+        />
+        <button type="submit" class="btn-save">Save</button>
+      </form>  -->
+
+      <button
+        [routerLink]="['/admin/categories']"
+        type="button"
+        class="btn-save"
+      >
+        Categories
+      </button>
+      <button [routerLink]="['/admin/info']" type="button" class="btn-save">
+        Information
+      </button>
+      <button [routerLink]="['/admin/new-meal']" type="button" class="btn-save">
+        Add new meal
+      </button>
+    </div>
   </div>
 
-  <div class="admin-main" *ngFor="let m of filteredMeals">
-    <ul class="admin-main__list">
-      <li>{{ m.name }}</li>
-      <li>{{ m.categoryName }}</li>
-      <li>{{ m.price }}</li>
-      <li>{{ m.weight }}</li>
-      <li>availability: <input type="checkbox" /></li>
-      <button [routerLink]="['edit-meal/', m.id]">Edit</button>
-    </ul>
+  <div class="container">
+    <div class="card" *ngFor="let m of meals | async">
+      <div class="card-header">
+        <img src="{{ m.img }}" alt="rover" />
+      </div>
+      <div class="card-body">
+        <h4>{{ m.name }}</h4>
+        <p>{{ m.description }}</p>
+        <div class="user">
+          <div class="user-container">
+            <div>Weight:</div>
+            <div class="user-info">
+              <small>{{ m.weight }}</small>
+            </div>
+          </div>
+          <div class="user-container">
+            <div>Price:</div>
+            <div class="user-info">
+              <small>{{ m.price }}</small>
+              ₴
+            </div>
+          </div>
+          <div class="card-btn">
+            <button [routerLink]="['edit-meal/', m.id]" class="btn-edit">
+              Edit
+            </button>
+            <button type="button" (click)="delete(m.id)" class="cancel">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- <div class="admin-main" *ngFor="let m of meals | async">
+  <ul class="admin-main__list">
+    <li>{{ m.name }}</li>
+    <li>{{ m.categoryName }}</li>
+    <li>{{ m.price }}</li>
+    <li>{{ m.weight }}</li>
+    <li>availability: <input type="checkbox" /></li>
+    <button [routerLink]="['edit-meal/', m.id]">Edit</button>
+    <button type="button" (click)="delete(m.id)" class="cancel">
+      Delete
+    </button>
+  </ul>
+</div> -->

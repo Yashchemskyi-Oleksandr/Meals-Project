@@ -1,8 +1,12 @@
-import { CategoryService } from 'src/app/services/category.service';
 import { MealsService } from 'src/app/services/meals.service';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { applySearch, deleteMeal } from './../../store/meals/meals.action';
+import { AppState } from 'src/app/store/app.state';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Meals } from 'src/app/store/meals/meals.model';
+import { select, Store } from '@ngrx/store';
+import { selectMealsBySearch } from 'src/app/store/meals/meals.selector';
+import { Info } from 'src/app/store/info/info.model';
 
 @Component({
   selector: 'app-admin',
@@ -10,68 +14,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  public meals: any = [];
-  public categories: any = [];
-  public filteredMeals: any = [];
-  public newData: any = [];
+  meals: Observable<Meals[]>;
+
+  // public newData: any = [];
 
   constructor(
-    private http: HttpClient,
-    private route: ActivatedRoute,
     private mealsService: MealsService,
-    private categoryService: CategoryService
-  ) {}
+    private store: Store<AppState>
+  ) {
+    this.meals = store.pipe(select(selectMealsBySearch));
+  }
 
-  // onSubmit(data:any) {
+  search(query: string) {
+    this.store.dispatch(applySearch({ search: query }));
+  }
+
+  delete(id: string) {
+    if (confirm('Are you sure you want to delete this product')) {
+      this.mealsService.deleteByIdMeal(id).subscribe((result) => {
+        console.log('delte', result);
+        this.store.dispatch(deleteMeal({ id: id })); //id = id (id: string ) = type {id: id} set value
+      });
+    }
+  }
+
+  // onSubmit(data: any) {
+  //   this.http
+  //     .post('http://localhost:7000/api/categories', data)
+  //     .subscribe((result) => {
+  //       console.log('result', result);
+  //     });
   //   console.log(data);
-  //   }
+  // }
 
-  filter(query: string) {
-    this.filteredMeals = query
-      ? this.meals.filter((p: any) =>
-          p.name.toLowerCase().includes(query.toLocaleLowerCase())
-        )
-      : this.meals;
-  }
-
-  onSubmit(data: any) {
-    this.http
-      .post('http://localhost:7000/api/categories', data)
-      .subscribe((result) => {
-        console.log('result', result);
-      });
-    console.log(data);
-  }
-
-  ngOnInit(): void {
-    this.mealsService.getMeals().subscribe((allMeals) => {
-      this.meals = allMeals;
-      this.filteredMeals = allMeals;
-      console.log(this.filteredMeals);
-
-      this.categoryService.getCategories().subscribe((cat) => {
-        this.categories = cat;
-        console.log(cat);
-
-        for (let meal of this.meals) {
-          for (let cat of this.categories) {
-            if (meal.categoryId === cat.id) {
-              meal.categoryName = cat.categoryName;
-              console.log(this.meals);
-
-              console.log(meal);
-            }
-          }
-        }
-      });
-    });
-
-    // this.mealsService
-    //   .getMealsByCategories(this.id)
-    //   .subscribe((mealsCat: any) => {
-    //     console.log(mealsCat);
-    //     this.filteredMeals = mealsCat;
-    //     console.log(this.filteredMeals);
-    //   });
-  }
+  ngOnInit(): void {}
 }

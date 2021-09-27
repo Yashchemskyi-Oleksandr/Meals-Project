@@ -1,34 +1,55 @@
-<form class="form" #f="ngForm" (ngSubmit)="saveNewMeal(f.value)">
+<div class="admin-top">
+  <button [routerLink]="['/admin']" type="submit" class="btn-save">Back</button>
+</div>
+
+<form class="form" #f="ngForm" (ngSubmit)="saveMeal(f.value)">
   <div class="form-wrapper">
     <div class="form-top">
-      <img
-        src="https://evanevanstours.com/blog/wp-content/uploads/2019/09/meat-restaurant-london.jpg"
-        alt="Photo"
-      />
-      <button>Add Photo</button>
+      <img *ngIf="imgUrl; else elseBlock" src="{{ imgUrl }}" alt="Photo" />
+      <ng-template #elseBlock>
+        <img src="{{ meal.img }}" alt="Photo" />
+      </ng-template>
+
+      <input type="file" (change)="onFileSelected($event)" />
+      <button type="button" (click)="onUpload()">Add Photo</button>
     </div>
-    <input [(ngModel)]="meal.img" name="img" type="text" placeholder="Image" />
-    <input [(ngModel)]="meal.name" name="name" type="text" placeholder="Name" />
-    <select [(ngModel)]="meal.categoryId" name="categoryId" class="selector">
+    <input
+      [(ngModel)]="imgUrl"
+      [(ngModel)]="meal && meal.img"
+      name="img"
+      type="text"
+      placeholder="Image"
+    />
+    <input
+      [(ngModel)]="meal && meal.name"
+      name="name"
+      type="text"
+      placeholder="Name"
+    />
+    <select
+      [(ngModel)]="meal && meal.categoryId"
+      name="categoryId"
+      class="selector"
+    >
       <option selected disabled>Choose the category</option>
-      <option *ngFor="let c of categories" [value]="c.id">
+      <option *ngFor="let c of categories | async" [value]="c.id">
         {{ c.categoryName }}
       </option>
     </select>
     <input
-      [(ngModel)]="meal.price"
+      [(ngModel)]="meal && meal.price"
       name="price"
       type="text"
       placeholder="Price"
     />
     <input
-      [(ngModel)]="meal.weight"
+      [(ngModel)]="meal && meal.weight"
       name="weight"
       type="text"
       placeholder="Weight"
     />
     <input
-      [(ngModel)]="meal.description"
+      [(ngModel)]="meal && meal.description"
       name="description"
       type="text"
       placeholder="Please write a description about meal"
@@ -36,9 +57,6 @@
     <div class="two-btn">
       <button class="btn-save">Save Meal</button>
       <button routerLink="/admin" class="cancel">Cancel</button>
-      <div>
-        <button type="button" (click)="delete()" class="cancel">Delete</button>
-      </div>
     </div>
   </div>
 </form>

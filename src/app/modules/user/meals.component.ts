@@ -1,10 +1,16 @@
-import { CategoryService } from 'src/app/services/category.service';
-import { MealsService } from 'src/app/services/meals.service';
+import { Route, ActivatedRoute } from '@angular/router';
+import { applyCategory, getMeals } from './../../store/meals/meals.action';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
-// import { ApiService } from 'src/app/api.service';
-import { ActivatedRoute } from '@angular/router';
-import { Meals } from 'src/app/interface/dishes';
-import { RouterModule, Route } from '@angular/router';
+
+import { selectCategories } from 'src/app/store/categories/categories.selector';
+import { AppState } from 'src/app/store/app.state';
+import { Meals } from 'src/app/store/meals/meals.model';
+import { Categories } from 'src/app/store/categories/categories.model';
+
+import { selectMealsByCategory } from 'src/app/store/meals/meals.selector';
+import { MealsService } from 'src/app/services/meals.service';
 
 @Component({
   selector: 'app-meals',
@@ -12,47 +18,38 @@ import { RouterModule, Route } from '@angular/router';
   styleUrls: ['./meals.component.scss'],
 })
 export class MealsComponent implements OnInit {
-  public meals: any = [];
-  public categories: any = [];
-  public category: any;
-  public filteredMeals: any = [];
-  public id: any = '';
+  meals: Observable<Meals[]> = this.store.pipe(select(selectMealsByCategory));
+  categories: Observable<Categories[]> = this.store.pipe(
+    select(selectCategories)
+  );
+  categoryId: string | null = null;
 
   constructor(
+    private store: Store<AppState>,
     private route: ActivatedRoute,
-    private mealsService: MealsService,
-    private categoryService: CategoryService
+    private mealsService: MealsService
   ) {}
+  // filter on own store
+  // -- save category to store
+  // onClickCategory(categoryId: string) {
+  //   this.store.dispatch(applyCategory({ id: categoryId }));
+  // }
 
+  // filter on backend side
+  // ---everytime on click  send req to backend
   onClickCategory(categoryId: string) {
-    console.log(categoryId);
-
-    this.filteredMeals = this.meals.filter((meal: any) => {
-      // console.log(meal);
-
-      return meal.categoryId === categoryId;
+    this.mealsService.getMeals(categoryId).subscribe((meals) => {
+      this.store.dispatch(getMeals({ meals }));
     });
-    console.log(this.filteredMeals);
   }
 
   ngOnInit(): void {
-    this.mealsService.getMeals().subscribe((allMeals) => {
-      this.meals = allMeals;
-      this.filteredMeals = allMeals;
-      console.log(this.filteredMeals);
-    });
-
-    this.categoryService.getCategories().subscribe((cat) => {
-      this.categories = cat;
-      console.log(cat);
-    });
-
-    // this.mealsService
-    //   .getMealsByCategories(this.id)
-    //   .subscribe((mealsCat: any) => {
-    //     console.log(mealsCat);
-    //     this.filteredMeals = mealsCat;
-    //     console.log(this.filteredMeals);
-    //   });
+    // on first render -> send req to backend for getting filtered meals
+    this.categoryId = this.route.snapshot.paramMap.get('categoryId');
+    if (this.categoryId) {
+      this.mealsService.getMeals(this.categoryId).subscribe((meals) => {
+        this.store.dispatch(getMeals({ meals }));
+      });
+    }
   }
 }

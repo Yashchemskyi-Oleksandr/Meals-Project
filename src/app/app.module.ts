@@ -1,3 +1,5 @@
+import { categoriesReducer } from './store/categories/categories.reducer';
+import { mealsReducer } from './store/meals/meals.reducer';
 import { MealFormComponent } from './modules/admin/meal-form/meal-form.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -7,15 +9,21 @@ import { MealsService } from './services/meals.service';
 import { CategoryService } from './services/category.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
-import { ActivatedRoute } from '@angular/router';
 import { InfoService } from './services/info.service';
 import { AdminComponent } from './modules/admin/admin.component';
+import { CategoriesPageComponent } from './modules/admin/categories-page/categories-page.component';
+import { CategoryFormComponent } from './modules/admin/category-form/category-form.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { InfoPageComponent } from './modules/admin/info-page/info-page.component';
+import { infoReducer } from './store/info/info.reducer';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -25,19 +33,24 @@ import { AdminComponent } from './modules/admin/admin.component';
     FooterComponent,
     AdminComponent,
     MealFormComponent,
+    CategoriesPageComponent,
+    CategoryFormComponent,
+    InfoPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    // RouterModule.forRoot([
-    //   { path: '', component: HomeComponent },
-    //   // { path: '', component: MealsComponent },
-    //   { path: 'meals/:categoryId', component: MealsComponent },
-    //   // { path: '', component: CategoriesComponent },
-    //   { path: 'admin', component: AdminComponent },
-    // ]),
+    ReactiveFormsModule,
+    StoreModule.forRoot({
+      categories: categoriesReducer,
+      meals: mealsReducer,
+      info: infoReducer,
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, autoPause: true }),
+    BrowserAnimationsModule,
+    MatSliderModule,
   ],
   providers: [CategoryService, MealsService, InfoService],
   bootstrap: [AppComponent],

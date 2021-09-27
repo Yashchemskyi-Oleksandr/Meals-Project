@@ -1,6 +1,6 @@
 <div class="admin-top">
   <button [routerLink]="['/admin']" type="submit" class="btn-save">Back</button>
-  <form #createCategory="ngForm" (ngSubmit)="onSubmit(createCategory.value)">
+  <form #createCategory="ngForm" (ngSubmit)="create(createCategory.value)">
     <input
       name="categoryName"
       ngModel
@@ -12,12 +12,12 @@
 </div>
 
 <div class="table">
-  <table class="customers">
+  <table class="manager">
     <tr>
       <th>CategoryName</th>
       <th>Edit</th>
     </tr>
-    <tr *ngFor="let c of categories">
+    <tr *ngFor="let c of categories | async">
       <td>{{ c.categoryName }}</td>
       <td>
         <button [routerLink]="['edit-category/', c.id]">Edit</button>

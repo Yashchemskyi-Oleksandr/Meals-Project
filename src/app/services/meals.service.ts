@@ -1,4 +1,4 @@
-import { Meals } from './../interface/dishes';
+import { Meals } from '../store/meals/meals.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -23,8 +23,8 @@ export class MealsService {
     return this.http.post<Meals>(url, meal);
   }
 
-  getMeals(): Observable<Meals[]> {
-    let url = 'http://localhost:7000/api/meals';
+  getMeals(categoryId: string = ''): Observable<Meals[]> {
+    let url = `http://localhost:7000/api/meals/${categoryId}`;
     return this.http.get<Meals[]>(url);
   }
 
@@ -33,13 +33,18 @@ export class MealsService {
     return this.http.get<Meals[]>(url);
   }
 
-  getByIdMeal(productId: string): Observable<Meals[]> {
+  getByIdMeal(productId: string): Observable<Meals> {
     let url = `http://localhost:7000/api/meals/edit-meal/${productId}`;
-    return this.http.get<Meals[]>(url);
+    return this.http.get<Meals>(url);
   }
 
-  updateByIdMeal(productId: string, product: Meals): Observable<Meals[]> {
+  updateByIdMeal(productId: string, product: Meals): Observable<Meals> {
     let url = `http://localhost:7000/api/meals/${productId}`;
-    return this.http.put<Meals[]>(url, { ...product });
+    return this.http.put<Meals>(url, { ...product });
+  }
+
+  deleteByIdMeal(productId: string): Observable<Meals[]> {
+    let url = `http://localhost:7000/api/meals/${productId}`;
+    return this.http.delete<Meals[]>(url);
   }
 }

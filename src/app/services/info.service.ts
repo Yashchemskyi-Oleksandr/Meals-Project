@@ -1,5 +1,8 @@
+// import { Info } from './../interface/info';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Info } from '../store/info/info.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,23 +10,18 @@ import { HttpClient } from '@angular/common/http';
 export class InfoService {
   constructor(private http: HttpClient) {}
 
-  getAllInfo() {
+  createInfo(info: any): Observable<Info> {
     let url = 'http://localhost:7000/api/info';
-    return this.http.get(url);
+    return this.http.post<Info>(url, info);
   }
-  ///// переніс в сервіс категорій
-  // getCategories() {
-  //   let url = 'http://localhost:7000/api/categories';
-  //   return this.http.get(url);
-  // }
-  //// переніс в серів страв
-  // getMeals() {
-  //   let url = 'http://localhost:7000/api/meals';
-  //   return this.http.get(url);
-  // }
-  //// переніс в серів страв
-  // getMealsByCategories() {
-  //   let url = 'http://localhost:7000/api/meals/:categoryId';
-  //   return this.http.get(url);
-  // }
+
+  getAllInfo(): Observable<Info> {
+    let url = 'http://localhost:7000/api/info';
+    return this.http.get<Info>(url);
+  }
+
+  updateInfoById(info: Info) {
+    let url = 'http://localhost:7000/api/info';
+    return this.http.put(url, info);
+  }
 }
