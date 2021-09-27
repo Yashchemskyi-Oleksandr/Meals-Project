@@ -1,4 +1,7 @@
-import { createCategory } from './../../../store/categories/categories.action';
+import {
+  createCategory,
+  deleteCategory,
+} from './../../../store/categories/categories.action';
 import { AppState } from 'src/app/store/app.state';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -29,6 +32,15 @@ export class CategoriesPageComponent implements OnInit {
     this.categoryService.createCategory(data).subscribe((category) => {
       this.store.dispatch(createCategory({ newCategory: category }));
     });
+  }
+
+  delete(id: string) {
+    if (confirm('Are you sure you want to delete this product')) {
+      this.categoryService.deleteCategoryById(id).subscribe((result) => {
+        console.log('delte', result);
+        this.store.dispatch(deleteCategory({ id: id })); //id = id (id: string ) = type {id: id} set value
+      });
+    }
   }
 
   ngOnInit(): void {}

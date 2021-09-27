@@ -36,4 +36,9 @@ export class CategoryService {
     let url = `http://localhost:7000/api/categories/${categoryId}`;
     return this.http.patch<Categories>(url, category);
   }
+
+  deleteCategoryById(categoryId: string): Observable<Categories> {
+    let url = `http://localhost:7000/api/categories/${categoryId}`;
+    return this.http.delete<Categories>(url);
+  }
 }

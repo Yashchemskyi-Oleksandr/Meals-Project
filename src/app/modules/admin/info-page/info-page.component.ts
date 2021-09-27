@@ -30,24 +30,23 @@ export class InfoPageComponent implements OnInit {
 
   saveInfo(value: any) {
     console.log('dsfa', value);
-    this.infoService.updateInfoById(value).subscribe((res) => {
+    this.infoService.updateInfoById(value, this.info.id).subscribe((res) => {
       console.log('resrersers', res);
 
-      this.store.dispatch(updateInfo({ updatedInfo: { ...value } }));
+      this.store.dispatch(updateInfo({ updatedInfo: value }));
     });
+
     this.router.navigate(['/admin']);
   }
 
   ngOnInit(): void {
     // this.id = this.route.snapshot.paramMap.get('id');
     // console.log(this.id);
-
     // this.myForm = this.fb.group({
     //   contacts: [],
     //   wiFi: [],
     //   address: [],
     // });
-
     this.infoService.getAllInfo().subscribe((i: any) => {
       this.info = i;
       console.log(i);

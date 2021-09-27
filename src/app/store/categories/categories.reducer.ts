@@ -2,6 +2,7 @@ import {
   getCategories,
   updateCategory,
   createCategory,
+  deleteCategory,
 } from './categories.action';
 import { createReducer, on } from '@ngrx/store';
 import { Categories } from './categories.model';
@@ -43,5 +44,15 @@ export const categoriesReducer = createReducer(
     console.log(newCategory);
 
     return [...state, newCategory];
+  }),
+  on(deleteCategory, (state, { id }) => {
+    console.log(id, 'id');
+
+    const updatedCategory = state.filter((category: any) => {
+      return category.id !== id;
+    });
+    console.log(updatedCategory, 'wefwef');
+
+    return updatedCategory;
   })
 );

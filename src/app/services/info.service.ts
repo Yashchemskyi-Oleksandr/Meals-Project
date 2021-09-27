@@ -20,8 +20,8 @@ export class InfoService {
     return this.http.get<Info>(url);
   }
 
-  updateInfoById(info: Info) {
-    let url = 'http://localhost:7000/api/info';
+  updateInfoById(info: Info, id: string) {
+    let url = `http://localhost:7000/api/info/${id}`;
     return this.http.put(url, info);
   }
 }

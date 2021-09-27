@@ -16,3 +16,8 @@ export const createCategory = createAction(
   'CREATE_CATEGORY',
   props<{ newCategory: Categories }>()
 );
+
+export const deleteCategory = createAction(
+  'DELETE_CATEGORY',
+  props<{ id: string }>()
+);

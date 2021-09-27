@@ -21,6 +21,9 @@
       <td>{{ c.categoryName }}</td>
       <td>
         <button [routerLink]="['edit-category/', c.id]">Edit</button>
+        <button type="button" (click)="delete(c.id)" class="cancel">
+          Delete
+        </button>
       </td>
     </tr>
   </table>
