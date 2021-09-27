@@ -7,7 +7,7 @@
     <div class="form-top">
       <img *ngIf="imgUrl; else elseBlock" src="{{ imgUrl }}" alt="Photo" />
       <ng-template #elseBlock>
-        <img src="{{ meal.img }}" alt="Photo" />
+        <img src="{{ meal?.img }}" alt="Photo" />
       </ng-template>
 
       <input type="file" (change)="onFileSelected($event)" />
