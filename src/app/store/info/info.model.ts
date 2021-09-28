@@ -1,6 +1,6 @@
 export interface Info {
-  // id: string | null;.
-  contacts: string | null;
-  wiFi: string | null;
-  address: string | null;
+  id: string;
+  contacts: string;
+  wiFi: string;
+  address: string;
 }

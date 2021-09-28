@@ -5,8 +5,15 @@ import { selectInfo } from './../../../store/info/info.selector';
 import { AppState } from 'src/app/store/app.state';
 import { InfoService } from 'src/app/services/info.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { Info } from 'src/app/store/info/info.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-info-page',
@@ -14,46 +21,39 @@ import { select, Store } from '@ngrx/store';
   styleUrls: ['./info-page.component.scss'],
 })
 export class InfoPageComponent implements OnInit {
-  myForm: any = FormGroup;
-  info: any = [];
-  id: any;
+  infoForm: FormGroup;
+  info$: Observable<Info> = this.store.pipe(select(selectInfo));
+  openModal: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private infoService: InfoService,
     private store: Store<AppState>
   ) {
-    this.info = store.pipe(select(selectInfo));
+    this.infoForm = new FormGroup({
+      wiFi: new FormControl('', [Validators.required]),
+      contacts: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(13),
+      ]),
+      address: new FormControl('', [Validators.required]),
+    });
   }
 
-  saveInfo(value: any) {
-    console.log('dsfa', value);
-    this.infoService.updateInfoById(value, this.info.id).subscribe((res) => {
-      console.log('resrersers', res);
-
-      this.store.dispatch(updateInfo({ updatedInfo: value }));
+  saveInfo() {
+    if (!this.infoForm.valid) {
+      return;
+    }
+    const updatedInfo = this.infoForm.value;
+    this.infoService.updateInfo(updatedInfo).subscribe((response: Info) => {
+      this.store.dispatch(updateInfo({ updatedInfo: response }));
     });
 
     this.router.navigate(['/admin']);
   }
 
   ngOnInit(): void {
-    // this.id = this.route.snapshot.paramMap.get('id');
-    // console.log(this.id);
-    // this.myForm = this.fb.group({
-    //   contacts: [],
-    //   wiFi: [],
-    //   address: [],
-    // });
-    this.infoService.getAllInfo().subscribe((i: any) => {
-      this.info = i;
-      console.log(i);
-    });
-  }
-
-  updateInfo(): void {
-    console.log(this.myForm.value);
+    this.info$.subscribe((data) => this.infoForm.patchValue(data));
   }
 }
