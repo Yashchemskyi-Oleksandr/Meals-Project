@@ -24,6 +24,13 @@ import { InfoPageComponent } from './modules/admin/info-page/info-page.component
 import { infoReducer } from './store/info/info.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -51,6 +58,13 @@ import { MatSliderModule } from '@angular/material/slider';
     StoreDevtoolsModule.instrument({ maxAge: 25, autoPause: true }),
     BrowserAnimationsModule,
     MatSliderModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatToolbarModule,
   ],
   providers: [CategoryService, MealsService, InfoService],
   bootstrap: [AppComponent],
