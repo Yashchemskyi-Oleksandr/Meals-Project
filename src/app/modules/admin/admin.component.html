@@ -8,16 +8,6 @@
         placeholder="Search"
       />
 
-      <!-- <form #createCategory="ngForm" (ngSubmit)="onSubmit(createCategory.value)">
-        <input
-          name="categoryName"
-          ngModel
-          #categoryName="ngModel"
-          placeholder="Add new category"
-        />
-        <button type="submit" class="btn-save">Save</button>
-      </form>  -->
-
       <button
         [routerLink]="['/admin/categories']"
         type="button"
@@ -47,6 +37,7 @@
             <div>Weight:</div>
             <div class="user-info">
               <small>{{ m.weight }}</small>
+              g
             </div>
           </div>
           <div class="user-container">
@@ -69,17 +60,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="admin-main" *ngFor="let m of meals | async">
-  <ul class="admin-main__list">
-    <li>{{ m.name }}</li>
-    <li>{{ m.categoryName }}</li>
-    <li>{{ m.price }}</li>
-    <li>{{ m.weight }}</li>
-    <li>availability: <input type="checkbox" /></li>
-    <button [routerLink]="['edit-meal/', m.id]">Edit</button>
-    <button type="button" (click)="delete(m.id)" class="cancel">
-      Delete
-    </button>
-  </ul>
-</div> -->

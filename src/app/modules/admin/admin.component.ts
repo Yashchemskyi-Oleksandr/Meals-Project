@@ -16,8 +16,6 @@ import { Info } from 'src/app/store/info/info.model';
 export class AdminComponent implements OnInit {
   meals: Observable<Meals[]>;
 
-  // public newData: any = [];
-
   constructor(
     private mealsService: MealsService,
     private store: Store<AppState>
@@ -32,20 +30,10 @@ export class AdminComponent implements OnInit {
   delete(id: string) {
     if (confirm('Are you sure you want to delete this product')) {
       this.mealsService.deleteByIdMeal(id).subscribe((result) => {
-        console.log('delte', result);
-        this.store.dispatch(deleteMeal({ id: id })); //id = id (id: string ) = type {id: id} set value
+        this.store.dispatch(deleteMeal({ id: id }));
       });
     }
   }
-
-  // onSubmit(data: any) {
-  //   this.http
-  //     .post('http://localhost:7000/api/categories', data)
-  //     .subscribe((result) => {
-  //       console.log('result', result);
-  //     });
-  //   console.log(data);
-  // }
 
   ngOnInit(): void {}
 }
