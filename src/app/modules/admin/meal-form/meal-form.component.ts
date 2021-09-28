@@ -1,26 +1,17 @@
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Meals } from 'src/app/store/meals/meals.model';
 import { selectCategories } from './../../../store/categories/categories.selector';
-import { getCategories } from './../../../store/categories/categories.action';
 import { AppState } from 'src/app/store/app.state';
 import { MealsService } from 'src/app/services/meals.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { CategoryService } from 'src/app/services/category.service';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { createMeal, updateMeal } from 'src/app/store/meals/meals.action';
 import { Observable } from 'rxjs';
 import { Categories } from 'src/app/store/categories/categories.model';
-import { selectMeals } from 'src/app/store/meals/meals.selector';
 import { initializeApp } from 'firebase/app';
-import {
-  getDownloadURL,
-  getMetadata,
-  getStorage,
-  ref,
-  uploadBytes,
-} from 'firebase/storage';
-// import 'rxjs/add/operator/take';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 const firebaseConfig = {
   apiKey: 'AIzaSyBpmt7o_DubuVG4RRQbFRtDWn-IPN8ZMLo',
   authDomain: 'restaurant-d6096.firebaseapp.com',
@@ -32,7 +23,6 @@ const firebaseConfig = {
 };
 const firebaseApp = initializeApp(firebaseConfig);
 
-// Get a reference to the storage service, which is used to create references in your storage bucket
 const storage = getStorage(firebaseApp);
 
 @Component({
@@ -41,11 +31,14 @@ const storage = getStorage(firebaseApp);
   styleUrls: ['./meal-form.component.scss'],
 })
 export class MealFormComponent implements OnInit {
-  categories: Observable<Categories[]>;
-  meal: any;
+  categories: Observable<Categories[]> = this.store.pipe(
+    select(selectCategories)
+  );
+  meal$: Meals | undefined;
   id: any;
   selectedFile: any = null;
   imgUrl: string = '';
+  mealForm: FormGroup;
 
   constructor(
     private http: HttpClient,
@@ -54,7 +47,15 @@ export class MealFormComponent implements OnInit {
     private router: Router,
     private store: Store<AppState>
   ) {
-    this.categories = store.pipe(select(selectCategories));
+    this.mealForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      img: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      weight: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
+      categoryId: new FormControl('', [Validators.required]),
+      availability: new FormControl(true, [Validators.required]),
+    });
   }
 
   onFileSelected(event: any) {
@@ -70,20 +71,10 @@ export class MealFormComponent implements OnInit {
         this.imgUrl = url;
       });
     });
-
-    // getMetadata(storageRef).then((metadata) => {
-    //   console.log('metadata', metadata);
-
-    //   // Metadata now contains the metadata for 'images/forest.jpg'
-    // });
-    // const fd = new FormData();
-    // fd.append('image', this.selectedFile as string, this.selectedFile.name);
-    // this.http
-    //   .post('gs://restaurant-d6096.appspot.com/uploadFile', fd)
-    //   .subscribe(() => {});
   }
 
-  saveMeal(data: Meals) {
+  saveMeal() {
+    const data = this.mealForm.value;
     if (this.id) {
       this.mealsService
         .updateByIdMeal(this.id, { ...data })
@@ -108,8 +99,8 @@ export class MealFormComponent implements OnInit {
 
     if (this.id) {
       this.mealsService.getByIdMeal(this.id).subscribe((meal) => {
-        console.log('meal----', meal);
-        return (this.meal = meal);
+        this.meal$ = meal;
+        this.mealForm.patchValue(meal);
       });
     }
   }
