@@ -40,6 +40,11 @@ export const router: Routes = [
     path: 'meals',
     component: MealsComponent,
   },
+  {
+    path: '',
+    redirectTo: '/meals',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
