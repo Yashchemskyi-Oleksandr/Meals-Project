@@ -28,14 +28,12 @@ const getAll = async (req, res) => {
     if (categoryIds.length > 0) {
       meals = await Meals.findAll({
         include: [
-          ///// as join
           {
-            model: Categories, /// table that we want to join
-            required: true, /// хотим испольозовать inner join если не будет то буде left/right
+            model: Categories,
+            required: true,
             where: {
               id: {
-                /// то что ищем тоесть id
-                [Sequelize.Op.in]: categoryIds, ///////// сравниваем массив адй / seuelize.op.in - ми сравниваем массив елементов / еквивалентно оператору in в SQL
+                [Sequelize.Op.in]: categoryIds,
               },
             },
           },
