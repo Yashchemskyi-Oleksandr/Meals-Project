@@ -1,86 +1,144 @@
-<div class="admin-top">
-  <button [routerLink]="['/admin']" type="submit" class="btn-save">Back</button>
+<div>
+  <mat-icon class="btn-back" [routerLink]="['/admin']">arrow_back</mat-icon>
 </div>
 
-<form class="form" [formGroup]="mealForm" (ngSubmit)="saveMeal()">
-  <div class="form-image-field">
-    <img
-      *ngIf="imgUrl; else elseBlock"
-      src="{{ imgUrl }}"
-      alt="Photo"
-      width="200px"
-    />
+<div class="meal-wrap">
+  <form class="form" [formGroup]="mealForm" (ngSubmit)="saveMeal()">
+    <div class="form-image-field">
+      <img
+        *ngIf="mealForm.controls.img.value"
+        src="{{ mealForm.controls.img.value }}"
+        alt="Photo"
+        width="200px"
+      />
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="progressBar"
+      ></mat-progress-bar>
+      <mat-toolbar>
+        <input type="file" (change)="onFileSelected($event)" />
+        <button mat-stroked-button color="primary">Choose</button>
 
-    <ng-template #elseBlock>
-      <img src="{{ meal$?.img }}" alt="Photo" width="200px" />
-    </ng-template>
-    <mat-toolbar>
-      <input type="file" (change)="onFileSelected($event)" />
-      <button mat-stroked-button color="primary">Browser</button>
+        <button
+          mat-stroked-button
+          type="button"
+          color="primary"
+          (click)="onUpload()"
+        >
+          Add Photo
+        </button>
+      </mat-toolbar>
+    </div>
 
-      <button
-        mat-stroked-button
-        type="button"
-        color="primary"
-        (click)="onUpload()"
+    <mat-form-field appearance="fill">
+      <mat-label>image</mat-label>
+      <input matInput formControlName="img" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error
+        *ngIf="mealForm.controls.name.errors?.required"
+        class="error-message"
       >
-        Add Photo
+        Name is <strong>required</strong>.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form--item">
+      <mat-label>Category Name</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let cat of categories | async" [value]="cat.id">
+          {{ cat.categoryName }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="mealForm.controls.categoryId.errors?.required"
+        class="error-message"
+      >
+        Category is <strong>required</strong>.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" />
+      <mat-error
+        *ngIf="mealForm.controls.price.errors?.required"
+        class="error-message"
+      >
+        Price is <strong>required</strong>.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Weight</mat-label>
+      <input matInput formControlName="weight" />
+      <mat-error
+        *ngIf="mealForm.controls.weight.errors?.required"
+        class="error-message"
+      >
+        Weight is <strong>required</strong>.
+      </mat-error>
+      <mat-error
+        *ngIf="mealForm.controls.weight.errors?.maxlength"
+        class="error-message"
+      >
+        max length is 6
+      </mat-error>
+      <mat-error
+        *ngIf="mealForm.controls.weight.errors?.minlength"
+        class="error-message"
+      >
+        min length is 2
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea
+        formControlName="description"
+        matInput
+        placeholder="Fill description"
+      ></textarea>
+      <mat-error
+        *ngIf="mealForm.controls.description.errors?.required"
+        class="error-message"
+      >
+        Description is <strong>required</strong>.
+      </mat-error>
+      <mat-error
+        *ngIf="mealForm.controls.description.errors?.maxlength"
+        class="error-message"
+      >
+        max length is 60
+      </mat-error>
+      <mat-error
+        *ngIf="mealForm.controls.description.errors?.minlength"
+        class="error-message"
+      >
+        min length is 10
+      </mat-error>
+    </mat-form-field>
+
+    <div class="slide">
+      <mat-slide-toggle formControlName="availability" color="primary"
+        >Availability</mat-slide-toggle
+      >
+    </div>
+    <div class="buttons">
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        class="buttons--save"
+      >
+        Save
       </button>
-    </mat-toolbar>
-  </div>
-
-  <mat-form-field appearance="fill">
-    <mat-label>{{ imgUrl }}</mat-label>
-    <input matInput formControlName="img" />
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>name</mat-label>
-    <input matInput formControlName="name" />
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="form--item">
-    <mat-label>Category Name</mat-label>
-    <mat-select formControlName="categoryId">
-      <mat-option *ngFor="let cat of categories | async" [value]="cat.id">
-        {{ cat.categoryName }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Price</mat-label>
-    <input matInput formControlName="price" />
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Weight</mat-label>
-    <input matInput formControlName="weight" />
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Description</mat-label>
-    <textarea
-      formControlName="description"
-      matInput
-      placeholder="Fill description"
-    ></textarea>
-  </mat-form-field>
-
-  <mat-slide-toggle formControlName="availability" color="primary"
-    >Availability</mat-slide-toggle
-  >
-  <div class="buttons">
-    <button
-      mat-raised-button
-      type="submit"
-      color="primary"
-      class="buttons--save"
-    >
-      Save
-    </button>
-    <button mat-raised-button color="warn" [routerLink]="['/admin']">
-      Cancel
-    </button>
-  </div>
-</form>
+      <button mat-raised-button color="warn" [routerLink]="['/admin']">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

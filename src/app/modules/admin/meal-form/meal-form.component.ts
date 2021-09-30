@@ -1,17 +1,20 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Meals } from 'src/app/store/meals/meals.model';
-import { selectCategories } from './../../../store/categories/categories.selector';
-import { AppState } from 'src/app/store/app.state';
-import { MealsService } from 'src/app/services/meals.service';
+import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { createMeal, updateMeal } from 'src/app/store/meals/meals.action';
-import { Observable } from 'rxjs';
-import { Categories } from 'src/app/store/categories/categories.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { initializeApp } from 'firebase/app';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+
+import { Meals } from 'src/app/store/meals/meals.model';
+import { selectCategories } from 'src/app/store/categories/categories.selector';
+import { AppState } from 'src/app/store/app.state';
+import { MealsService } from 'src/app/services/meals.service';
+import { createMeal, updateMeal } from 'src/app/store/meals/meals.action';
+import { Category } from 'src/app/store/categories/categories.model';
+import { NotificationService } from 'src/app/services/notification.service';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyBpmt7o_DubuVG4RRQbFRtDWn-IPN8ZMLo',
   authDomain: 'restaurant-d6096.firebaseapp.com',
@@ -31,7 +34,7 @@ const storage = getStorage(firebaseApp);
   styleUrls: ['./meal-form.component.scss'],
 })
 export class MealFormComponent implements OnInit {
-  categories: Observable<Categories[]> = this.store.pipe(
+  categories: Observable<Category[]> = this.store.pipe(
     select(selectCategories)
   );
   meal$: Meals | undefined;
@@ -39,19 +42,28 @@ export class MealFormComponent implements OnInit {
   selectedFile: any = null;
   imgUrl: string = '';
   mealForm: FormGroup;
+  progressBar: boolean = false;
 
   constructor(
-    private http: HttpClient,
     private mealsService: MealsService,
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private notificationService: NotificationService
   ) {
     this.mealForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       img: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      weight: new FormControl('', [Validators.required]),
+      description: new FormControl('', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(100),
+      ]),
+      weight: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(6),
+      ]),
       price: new FormControl('', [Validators.required]),
       categoryId: new FormControl('', [Validators.required]),
       availability: new FormControl(true, [Validators.required]),
@@ -63,39 +75,52 @@ export class MealFormComponent implements OnInit {
   }
 
   onUpload() {
+    this.progressBar = true;
     const storageRef = ref(storage, this.selectedFile.name);
     uploadBytes(storageRef, this.selectedFile).then((snapshot) => {
-      console.log('Uploaded a blob or file!', snapshot);
       getDownloadURL(storageRef).then((url) => {
-        console.log('url', url);
-        this.imgUrl = url;
+        this.mealForm.patchValue({ img: url });
       });
+      this.progressBar = false;
     });
   }
 
   saveMeal() {
+    if (!this.mealForm.valid) {
+      return;
+    }
     const data = this.mealForm.value;
     if (this.id) {
-      this.mealsService
-        .updateByIdMeal(this.id, { ...data })
-        .subscribe((meal) => {
-          console.log('resultSubscribe', meal);
+      this.mealsService.updateByIdMeal(this.id, { ...data }).subscribe(
+        (meal) => {
           this.store.dispatch(
             updateMeal({ updatedMeal: { ...meal, id: this.id } })
           );
-        });
+          this.notificationService.success('Meal was updated');
+          this.router.navigate(['/admin']);
+        },
+        (error) => {
+          const { message } = error.error;
+          this.notificationService.error(message);
+        }
+      );
     } else {
-      this.mealsService.createMeal(data).subscribe((meal) => {
-        console.log('result', meal);
-        this.store.dispatch(createMeal({ newMeal: meal }));
-      });
+      this.mealsService.createMeal(data).subscribe(
+        (meal) => {
+          this.store.dispatch(createMeal({ newMeal: meal }));
+          this.notificationService.success('Meal was created');
+          this.router.navigate(['/admin']);
+        },
+        (error) => {
+          const { message } = error.error;
+          this.notificationService.error(message);
+        }
+      );
     }
-    this.router.navigate(['/admin']);
   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log('id____', this.id);
 
     if (this.id) {
       this.mealsService.getByIdMeal(this.id).subscribe((meal) => {
