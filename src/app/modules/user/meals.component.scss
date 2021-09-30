@@ -3,7 +3,7 @@
   width: 100%;
   height: auto;
   flex-wrap: wrap;
-  background: #fff;
+  // background: #fff;
   z-index: 999;
 
   &-container {
@@ -17,7 +17,7 @@
 }
 
 a {
-  padding: 15px 30px;
+  padding: 10px 30px;
   border-radius: 22px;
   font-size: 14px;
   cursor: pointer;
@@ -40,6 +40,8 @@ a {
   width: auto;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  height: auto;
+  margin: 2rem 0;
 }
 .card {
   margin: 10px;
@@ -48,6 +50,8 @@ a {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   width: 300px;
+  display: flex;
+  flex-direction: column;
 }
 .card-header img {
   width: 100%;
@@ -55,6 +59,28 @@ a {
   // border-radius: 1rem;
   border-radius: 0rem 0rem 1rem 1rem;
   object-fit: cover;
+}
+
+.card-name {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  // margin-bottom: 1rem;
+
+  & h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+.card-description {
+  flex: 1;
+  padding: 1rem 1rem 1rem 1rem;
+
+  & p {
+    margin: 0;
+  }
 }
 .card-body {
   display: flex;
@@ -65,16 +91,6 @@ a {
   // min-height: 250px;
 }
 
-.card-body p {
-  font-size: 13px;
-  // margin: 0 0 20px;
-}
-
-.card-body h4 {
-  font-size: 13px;
-  margin-bottom: 2px;
-  font-weight: bold;
-}
 .user {
   margin-top: auto;
   display: flex;
@@ -94,15 +110,6 @@ a {
   align-items: center;
 }
 
-.user img {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-}
-.user-info h5 {
-  margin: 0;
-}
 .user-info small {
   color: white;
   margin-right: 5px;

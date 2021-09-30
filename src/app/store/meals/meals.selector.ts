@@ -1,21 +1,13 @@
-import { AppState } from 'src/app/store/app.state';
-
 import { createSelector } from '@ngrx/store';
-import { Meals } from '../meals/meals.model';
-import { MealsState } from './meals.reducer';
 
-// const state = {
-//     meals: {
-//         data: [],
-//         activeFilter: 'some filter',
-//         search: 'search
-//     }
-// }
+import { AppState } from 'src/app/store/app.state';
+import { MealsState } from './meals.reducer';
 
 export const selectStore = (state: AppState) => state.meals;
 
 export const selectMeals = createSelector(
   selectStore,
+  // (state: AppState) => state.meals "the same"
   (meals: MealsState) => meals.data
 );
 

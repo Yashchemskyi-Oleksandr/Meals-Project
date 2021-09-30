@@ -1,6 +1,7 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+
 import { AppState } from 'src/app/store/app.state';
 import { Info } from 'src/app/store/info/info.model';
 import { selectInfo } from 'src/app/store/info/info.selector';

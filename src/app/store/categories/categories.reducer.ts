@@ -1,20 +1,14 @@
+import { createReducer, on } from '@ngrx/store';
+
 import {
   getCategories,
   updateCategory,
   createCategory,
   deleteCategory,
 } from './categories.action';
-import { createReducer, on } from '@ngrx/store';
-import { Categories } from './categories.model';
+import { Category } from './categories.model';
 
-export const initialState: Categories[] = [];
-
-// const categories = [
-//   // this own state
-//   {}, // first
-//   {}, // second
-//   {},
-// ];
+export const initialState: Category[] = [];
 
 export const categoriesReducer = createReducer(
   initialState,
@@ -23,35 +17,26 @@ export const categoriesReducer = createReducer(
   }),
 
   on(updateCategory, (state, { updatedCategory }) => {
-    console.log(updatedCategory);
     const updatedIndex = state.findIndex(
       (category) => category.id === updatedCategory.id
     );
-    console.log(updatedIndex);
     const newCategories = [...state];
 
     newCategories[updatedIndex] = {
       ...newCategories[updatedIndex],
       categoryName: updatedCategory.categoryName,
     };
-    console.log(newCategories);
 
-    // return category;
-    return newCategories; //найти категорію яку надо обновити , оновити дані в ный і вернути масів де будет категорія оновленна
+    return newCategories;
   }),
 
   on(createCategory, (state, { newCategory }) => {
-    console.log(newCategory);
-
     return [...state, newCategory];
   }),
   on(deleteCategory, (state, { id }) => {
-    console.log(id, 'id');
-
-    const updatedCategory = state.filter((category: any) => {
+    const updatedCategory = state.filter((category: Category) => {
       return category.id !== id;
     });
-    console.log(updatedCategory, 'wefwef');
 
     return updatedCategory;
   })

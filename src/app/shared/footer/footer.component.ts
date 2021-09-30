@@ -1,9 +1,9 @@
-import { selectInfo } from 'src/app/store/info/info.selector';
-import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { InfoService } from 'src/app/services/info.service';
-import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+
+import { selectInfo } from 'src/app/store/info/info.selector';
+import { AppState } from 'src/app/store/app.state';
 import { Info } from 'src/app/store/info/info.model';
 
 @Component({

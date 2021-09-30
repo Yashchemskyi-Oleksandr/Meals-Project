@@ -1,47 +1,48 @@
-<div>
-  <div class="categories">
-    <div class="categories-container">
-      <a
-        (click)="onClickCategory('')"
-        [routerLink]="['/meals']"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >All
-      </a>
-      <a
-        *ngFor="let category of categories | async"
-        (click)="onClickCategory(category.id)"
-        [routerLink]="['/meals/', category.id]"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        {{ category.categoryName }}
-      </a>
-    </div>
+<div class="categories">
+  <div class="categories-container">
+    <a
+      (click)="onClickCategory('')"
+      [routerLink]="['/meals']"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >All
+    </a>
+    <a
+      *ngFor="let category of categories | async"
+      (click)="onClickCategory(category.id)"
+      [routerLink]="['/meals/', category.id]"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      {{ category.categoryName }}
+    </a>
   </div>
+</div>
 
-  <div class="container">
-    <div class="card" *ngFor="let m of meals | async">
-      <div class="card-header">
-        <img src="{{ m.img }}" alt="rover" />
-      </div>
-      <div class="card-body">
-        <h4>{{ m.name }}</h4>
-        <p>{{ m.description }}</p>
-        <div class="user">
-          <div class="user-container">
-            <div>Weight:</div>
-            <div class="user-info">
-              <small>{{ m.weight }}</small>
-              g
-            </div>
+<div class="container">
+  <div class="card" *ngFor="let m of meals | async">
+    <div class="card-header">
+      <img src="{{ m.img }}" alt="rover" />
+    </div>
+    <div class="card-name">
+      <h4>{{ m.name }}</h4>
+    </div>
+    <div class="card-description">
+      <p>{{ m.description }}</p>
+    </div>
+    <div class="card-body">
+      <div class="user">
+        <div class="user-container">
+          <div>Weight:</div>
+          <div class="user-info">
+            <small>{{ m.weight }}</small>
           </div>
-          <div class="user-container">
-            <div>Price:</div>
-            <div class="user-info">
-              <small>{{ m.price }}</small>
-              ₴
-            </div>
+        </div>
+        <div class="user-container">
+          <div>Price:</div>
+          <div class="user-info">
+            <small>{{ m.price }}</small>
+            ₴
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 <header class="header">
   <a class="header-name" href="">adler</a>
   <div *ngIf="info | async as info" class="header-wifi">
+    <mat-icon class="wifi">wifi</mat-icon>
     {{ info.wiFi }}
   </div>
 </header>

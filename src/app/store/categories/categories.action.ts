@@ -1,20 +1,20 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Categories } from './categories.model';
+import { Category } from './categories.model';
 
 export const getCategories = createAction(
   'GET_CATEGORIES',
-  props<{ categories: Categories[] }>()
+  props<{ categories: Category[] }>()
 );
 
 export const updateCategory = createAction(
   'UPDATE_CATEGORY',
-  props<{ updatedCategory: Categories }>()
+  props<{ updatedCategory: Category }>()
 );
 
 export const createCategory = createAction(
   'CREATE_CATEGORY',
-  props<{ newCategory: Categories }>()
+  props<{ newCategory: Category }>()
 );
 
 export const deleteCategory = createAction(

@@ -1,21 +1,12 @@
-import { Meals } from '../store/meals/meals.model';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
+import { Meals } from '../store/meals/meals.model';
 @Injectable({
   providedIn: 'root',
 })
 export class MealsService {
-  // constructor(private http: HttpClient) {}
-  // public meals: any = [];
-  //   getMeals() {
-  //     let url = 'http://localhost:7000/api/meals';
-  //     return this.http.get(url).subscribe((response) => {
-  //       this.meals = response;
-  //     });
-  //   }
-
   constructor(private http: HttpClient) {}
 
   createMeal(meal: Meals): Observable<Meals> {

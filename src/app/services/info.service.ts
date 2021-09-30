@@ -1,8 +1,8 @@
-// import { Info } from './../interface/info';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { Info } from '../store/info/info.model';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

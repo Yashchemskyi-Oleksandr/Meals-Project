@@ -1,3 +1,5 @@
+import { createReducer, on } from '@ngrx/store';
+
 import {
   getMeals,
   applyCategory,
@@ -6,7 +8,6 @@ import {
   updateMeal,
   deleteMeal,
 } from './meals.action';
-import { createReducer, on } from '@ngrx/store';
 import { Meals } from './meals.model';
 
 export interface MealsState {
@@ -37,12 +38,10 @@ export const mealsReducer = createReducer(
     };
   }),
   on(updateMeal, (state, { updatedMeal }) => {
-    console.log('update', updatedMeal);
     const updatedIndex = state.data.findIndex((meal) => {
       return meal.id === updatedMeal.id;
     });
     const newMeals = [...state.data];
-    console.log(newMeals[updatedIndex]);
     newMeals[updatedIndex] = {
       ...newMeals[updatedIndex],
       ...updatedMeal,
@@ -51,17 +50,10 @@ export const mealsReducer = createReducer(
     return { ...state, data: newMeals };
   }),
   on(deleteMeal, (state, { id }) => {
-    console.log(id, 'id');
-
     const updatedMeals = state.data.filter((meal) => {
       return meal.id !== id;
     });
-    console.log(updatedMeals, 'wefwef');
 
     return { ...state, data: updatedMeals };
   })
 );
-
-// const arr = [1, 2]
-// arr[1] = 3
-// arr = [1, 3]
