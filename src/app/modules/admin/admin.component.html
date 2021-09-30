@@ -1,62 +1,67 @@
-<div class="admin">
-  <div class="admin-bar">
-    <div class="admin-top">
-      <input
-        #query
-        (keyup)="search(query.value)"
-        type="text"
-        placeholder="Search"
-      />
+<!-- <div class="admin"> -->
 
-      <button
-        [routerLink]="['/admin/categories']"
-        type="button"
-        class="btn-save"
-      >
-        Categories
-      </button>
-      <button [routerLink]="['/admin/info']" type="button" class="btn-save">
-        Information
-      </button>
-      <button [routerLink]="['/admin/new-meal']" type="button" class="btn-save">
-        Add new meal
-      </button>
-    </div>
+<div class="admin-wrap">
+  <input
+    #query
+    (keyup)="search(query.value)"
+    type="text"
+    placeholder="Search"
+  />
+  <div class="admin-btn">
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/admin/categories']"
+    >
+      Categories
+    </button>
+
+    <button mat-raised-button color="primary" [routerLink]="['/admin/info']">
+      Information
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/admin/new-meal']"
+    >
+      Add new meal
+    </button>
   </div>
-
-  <div class="container">
-    <div class="card" *ngFor="let m of meals | async">
-      <div class="card-header">
-        <img src="{{ m.img }}" alt="rover" />
-      </div>
-      <div class="card-body">
-        <h4>{{ m.name }}</h4>
-        <p>{{ m.description }}</p>
-        <div class="user">
-          <div class="user-container">
-            <div>Weight:</div>
-            <div class="user-info">
-              <small>{{ m.weight }}</small>
-              g
-            </div>
+</div>
+<div class="container">
+  <div class="card" *ngFor="let m of meals | async">
+    <div class="card-header">
+      <img src="{{ m.img }}" alt="rover" />
+    </div>
+    <div class="card-name">
+      <h4>{{ m.name }}</h4>
+    </div>
+    <div class="card-description">
+      <p>{{ m.description }}</p>
+    </div>
+    <div class="card-body">
+      <div class="user">
+        <div class="user-container">
+          <div>Weight:</div>
+          <div class="user-info">
+            <small>{{ m.weight }}</small>
           </div>
-          <div class="user-container">
-            <div>Price:</div>
-            <div class="user-info">
-              <small>{{ m.price }}</small>
-              ₴
-            </div>
+        </div>
+        <div class="user-container">
+          <div>Price:</div>
+          <div class="user-info">
+            <small>{{ m.price }}</small>
+            ₴
           </div>
-          <div class="card-btn">
-            <button [routerLink]="['edit-meal/', m.id]" class="btn-edit">
-              Edit
-            </button>
-            <button type="button" (click)="delete(m.id)" class="cancel">
-              Delete
-            </button>
-          </div>
+        </div>
+        <div class="card-btn">
+          <mat-icon class="btn-delete" (click)="delete(m.id)">delete</mat-icon>
+          <mat-icon class="btn-edit" [routerLink]="['edit-meal/', m.id]"
+            >edit</mat-icon
+          >
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- </div> -->
