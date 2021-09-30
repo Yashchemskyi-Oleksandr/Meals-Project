@@ -1,67 +1,74 @@
-<div class="admin-top">
-  <button [routerLink]="['/admin']" type="submit" class="btn-save">Back</button>
+<div class="title">
+  <mat-icon class="btn-back" [routerLink]="['/admin']">arrow_back</mat-icon>
+  <h4>Information</h4>
 </div>
+<div class="info-wrap">
+  <form class="form" [formGroup]="infoForm" (ngSubmit)="saveInfo()">
+    <mat-form-field class="form--item" appearance="fill">
+      <mat-label>wi-fi</mat-label>
+      <input matInput formControlName="wiFi" />
 
-<form class="form" [formGroup]="infoForm" (ngSubmit)="saveInfo()">
-  <mat-form-field class="form--item" appearance="fill">
-    <mat-label>wi-fi</mat-label>
-    <input matInput formControlName="wiFi" />
-    <mat-error
-      *ngIf="infoForm.controls.wiFi.errors?.required"
-      class="error-message"
-    >
-      Wi-Fi is <strong>required</strong>.
-    </mat-error>
-  </mat-form-field>
+      <div class="error-message">
+        <mat-error
+          *ngIf="
+            infoForm.controls.wiFi.errors?.required &&
+            infoForm.controls.address.touched
+          "
+        >
+          Wi-Fi is <strong>required</strong>.
+        </mat-error>
+      </div>
+    </mat-form-field>
 
-  <mat-form-field class="form--item" appearance="fill">
-    <mat-label>Address</mat-label>
-    <input matInput formControlName="address" />
-    <mat-error
-      *ngIf="
-        infoForm.controls.address.errors?.required &&
-        infoForm.controls.address.touched
-      "
-      class="error-message"
-    >
-      Address is <strong>required</strong>.
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="form--item" appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" />
+      <mat-error
+        *ngIf="
+          infoForm.controls.address.errors?.required &&
+          infoForm.controls.address.touched
+        "
+        class="error-message"
+      >
+        Address is <strong>required</strong>.
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="form--item" appearance="fill">
-    <mat-label>Contacts</mat-label>
-    <input matInput formControlName="contacts" />
-    <mat-error
-      *ngIf="infoForm.controls.contacts.errors?.required"
-      class="error-message"
-    >
-      Contacts is <strong>required</strong>
-    </mat-error>
-    <mat-error
-      *ngIf="infoForm.controls.contacts.errors?.maxlength"
-      class="error-message"
-    >
-      max length is 13
-    </mat-error>
-    <mat-error
-      *ngIf="infoForm.controls.contacts.errors?.minlength"
-      class="error-message"
-    >
-      min length is 6
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="form--item" appearance="fill">
+      <mat-label>Contacts</mat-label>
+      <input matInput formControlName="contacts" />
+      <mat-error
+        *ngIf="infoForm.controls.contacts.errors?.required"
+        class="error-message"
+      >
+        Contacts is <strong>required</strong>
+      </mat-error>
+      <mat-error
+        *ngIf="infoForm.controls.contacts.errors?.maxlength"
+        class="error-message"
+      >
+        max length is 20
+      </mat-error>
+      <mat-error
+        *ngIf="infoForm.controls.contacts.errors?.minlength"
+        class="error-message"
+      >
+        min length is 6
+      </mat-error>
+    </mat-form-field>
 
-  <div class="buttons">
-    <button
-      mat-raised-button
-      type="submit"
-      color="primary"
-      class="buttons--save"
-    >
-      Save
-    </button>
-    <button mat-raised-button color="warn" [routerLink]="['/admin']">
-      Cancel
-    </button>
-  </div>
-</form>
+    <div class="buttons">
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        class="buttons--save"
+      >
+        Save
+      </button>
+      <button mat-raised-button color="warn" [routerLink]="['/admin']">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

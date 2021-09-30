@@ -1,19 +1,15 @@
-import { router } from './../../../app-routing.module';
-import { ActivatedRoute, Router } from '@angular/router';
-import { updateInfo } from './../../../store/info/info.action';
-import { selectInfo } from './../../../store/info/info.selector';
+import { Observable } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+
+import { updateInfo } from 'src/app/store/info/info.action';
+import { selectInfo } from 'src/app/store/info/info.selector';
 import { AppState } from 'src/app/store/app.state';
 import { InfoService } from 'src/app/services/info.service';
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { select, Store } from '@ngrx/store';
 import { Info } from 'src/app/store/info/info.model';
-import { Observable } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-info-page',
@@ -28,14 +24,15 @@ export class InfoPageComponent implements OnInit {
   constructor(
     private router: Router,
     private infoService: InfoService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private notificationService: NotificationService
   ) {
     this.infoForm = new FormGroup({
       wiFi: new FormControl('', [Validators.required]),
       contacts: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
-        Validators.maxLength(13),
+        Validators.maxLength(20),
       ]),
       address: new FormControl('', [Validators.required]),
     });
@@ -46,11 +43,17 @@ export class InfoPageComponent implements OnInit {
       return;
     }
     const updatedInfo = this.infoForm.value;
-    this.infoService.updateInfo(updatedInfo).subscribe((response: Info) => {
-      this.store.dispatch(updateInfo({ updatedInfo: response }));
-    });
-
-    this.router.navigate(['/admin']);
+    this.infoService.updateInfo(updatedInfo).subscribe(
+      (response: Info) => {
+        this.store.dispatch(updateInfo({ updatedInfo: response }));
+        this.notificationService.success('Info was updated');
+        this.router.navigate(['/admin']);
+      },
+      (error) => {
+        const { message } = error.error;
+        this.notificationService.error(message);
+      }
+    );
   }
 
   ngOnInit(): void {
