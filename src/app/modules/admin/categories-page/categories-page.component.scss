@@ -1,4 +1,3 @@
-////////////////////
 .title {
   margin-top: 2rem;
   display: flex;
@@ -18,7 +17,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
   height: 100px;
   margin: 0 auto;
   padding: 0rem 2rem;
@@ -53,6 +51,14 @@
   }
 }
 
+.buttons {
+  display: flex;
+
+  &--save {
+    background-color: #4caf50;
+  }
+}
+
 .btn-back {
   cursor: pointer;
   display: flex;
@@ -81,17 +87,6 @@
   height: 40px;
 }
 
-.buttons {
-  display: flex;
-
-  &--save {
-    background-color: #4caf50;
-  }
-}
-
-.w {
-  height: 100%;
-}
 .wrap {
   padding: 10px;
   width: 700px;

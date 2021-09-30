@@ -31,12 +31,18 @@
     </div>
 
     <mat-form-field appearance="fill">
-      <mat-label>image</mat-label>
+      <mat-label>Image</mat-label>
       <input matInput formControlName="img" />
+      <mat-error
+        *ngIf="mealForm.controls.name.errors?.required"
+        class="error-message"
+      >
+        Image is <strong>required</strong>.
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>name</mat-label>
+      <mat-label>Name</mat-label>
       <input matInput formControlName="name" />
       <mat-error
         *ngIf="mealForm.controls.name.errors?.required"
