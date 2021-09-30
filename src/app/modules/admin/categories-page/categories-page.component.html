@@ -1,5 +1,8 @@
+<div class="title">
+  <mat-icon class="btn-back" [routerLink]="['/admin']">arrow_back</mat-icon>
+  <h4>Categories</h4>
+</div>
 <div class="admin-top">
-  <button [routerLink]="['/admin']" type="submit" class="btn-save">Back</button>
   <form #createCategory="ngForm" (ngSubmit)="create(createCategory.value)">
     <input
       name="categoryName"
@@ -7,24 +10,27 @@
       #categoryName="ngModel"
       placeholder="Add new category"
     />
-    <button type="submit" class="btn-save">Save</button>
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      class="buttons--save"
+    >
+      Save
+    </button>
   </form>
 </div>
 
-<div class="table">
-  <table class="manager">
-    <tr>
-      <th>CategoryName</th>
-      <th>Edit</th>
-    </tr>
-    <tr *ngFor="let c of categories | async">
-      <td>{{ c.categoryName }}</td>
-      <td>
-        <button [routerLink]="['edit-category/', c.id]">Edit</button>
-        <button type="button" (click)="delete(c.id)" class="cancel">
-          Delete
-        </button>
-      </td>
-    </tr>
-  </table>
+<div *ngFor="let cat of categories | async" class="wrap">
+  <mat-toolbar class="category">
+    <div>{{ cat.categoryName }}</div>
+    <div class="buttons">
+      <button mat-button class="btn-edit" (click)="openDialog(cat)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-button class="btn-delete" (click)="delete(cat.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
 </div>
