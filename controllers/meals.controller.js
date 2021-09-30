@@ -42,7 +42,9 @@ const getAll = async (req, res) => {
         ],
       });
     } else {
-      meals = await Meals.findAll();
+      meals = await Meals.findAll({
+        order: [["createdAt", "DESC"]],
+      });
     }
 
     res.status(200).json(meals);
